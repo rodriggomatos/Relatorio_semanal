@@ -1,4 +1,4 @@
-import os
+
 from AsanaApi import AsanaAPI
 from Project_Status_Manager import ProjectStatusManager
 from GmailAPI import GmailApi
@@ -162,10 +162,10 @@ if __name__ == '__main__':
                 assunto = f"Status do Projeto - {task_name}"
                 for email in list_emails:
                     try:
-                        gmail.send_email_html(assunto, html_content, email)
-                        print("Email enviado")
+                        gmail.send_email_html(assunto, html_content, 'rodrigo@thorusengenharia.com.br')
+                        print(f"Email enviado para {email}")
                         i = i + 1
                     except Exception as e:
-                        gmail.send_email(assunto, html_content, email)
+                        gmail.send_email(assunto, html_content, 'rodrigo@thorusengenharia.com.br')
         
                   

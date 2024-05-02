@@ -1,7 +1,6 @@
 
 import requests
 from twilio.rest import Client
-import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from google.oauth2.credentials import Credentials
