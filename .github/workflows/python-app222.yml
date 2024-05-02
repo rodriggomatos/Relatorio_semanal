@@ -21,7 +21,5 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: execute py script # run main.py
-        env:
-          GOOGLE_TOKEN_BASE64: ${{ secrets.GOOGLE_TOKEN_BASE64 }}
+      - name: execute py script # run main.py        
         run: python Main.py
