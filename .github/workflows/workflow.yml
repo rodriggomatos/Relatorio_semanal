@@ -18,8 +18,10 @@ jobs:
       with:
         python-version: '3.10'
 
-    - name: List files in the directory
-      run: ls -la
+    - name: Check current directory and list files
+      run: |
+        pwd
+        ls -la
 
     - name: Install dependencies
       run: |
