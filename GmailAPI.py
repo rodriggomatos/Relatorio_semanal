@@ -8,6 +8,7 @@ import os
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
+import json
 
 class GmailApi:
     def __init__(self):
@@ -15,7 +16,8 @@ class GmailApi:
         SCOPES = ['https://www.googleapis.com/auth/gmail.send']
         
         self.SCOPES = SCOPES
-        creds = None          
+        creds = None
+        '''
         if os.path.exists('token.json'):
             creds = Credentials.from_authorized_user_file('token.json', self.SCOPES)
         # If there are no (valid) credentials available, let the user log in.
@@ -29,6 +31,14 @@ class GmailApi:
             with open('token.json', 'w') as token:
                 token.write(creds.to_json())
         
+        
+        self.gmail_credentials_path = creds
+        self.service = build('gmail', 'v1', credentials=creds)
+        '''
+        
+        token_json = base64.b64decode(os.getenv('GOOGLE_TOKEN_BASE64')).decode('utf-8')
+        token_data = json.loads(token_json)
+        creds = Credentials.from_authorized_user_info(token_data)
         self.gmail_credentials_path = creds
         self.service = build('gmail', 'v1', credentials=creds)
 
