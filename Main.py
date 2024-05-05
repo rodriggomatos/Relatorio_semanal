@@ -4,7 +4,7 @@ from Project_Status_Manager import ProjectStatusManager
 from GmailAPI import GmailApi
 
 from datetime import date
-from WhatsApp_bot import WhatsAppBot
+#from WhatsApp_bot import WhatsAppBot
 from html_format import *
 
 def configura_ambiente():
