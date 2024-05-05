@@ -32,4 +32,5 @@ jobs:
       - name: execute py script # run main.py
         env:
           GOOGLE_TOKEN_BASE64: ${{ secrets.GOOGLE_TOKEN_BASE64 }}
+          ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
         run: python Main.py

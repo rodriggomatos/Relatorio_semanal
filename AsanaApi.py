@@ -21,6 +21,8 @@ class AsanaAPI:
     PROJECT_ID = '1203362410644441'
     def __init__(self,base_url='https://app.asana.com/api/1.0/'):
         self.access_token = os.getenv('ASANA_ACCESS_TOKEN')
+        if self.access_token is None:
+            raise ValueError("ASANA_ACCESS_TOKEN environment variable is not set.")
         self.project_id='1203362410644441'
         self.base_url = base_url
         self.headers = {'Authorization': f'Bearer {self.access_token}'}
