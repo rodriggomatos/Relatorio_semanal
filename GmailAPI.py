@@ -41,11 +41,12 @@ class GmailApi:
                 raise ValueError("GOOGLE_TOKEN_BASE64 environment variable is not set.")
             token_json = base64.b64decode().decode('utf-8')
             token_data = json.loads(token_json)
+            creds = Credentials.from_authorized_user_info(token_data)
+            self.gmail_credentials_path = creds
+            self.service = build('gmail', 'v1', credentials=creds)
         except Exception as e:
             print("Failed to decode the token:", str(e))
-        creds = Credentials.from_authorized_user_info(token_data)
-        self.gmail_credentials_path = creds
-        self.service = build('gmail', 'v1', credentials=creds)
+        
 
     
     def send_email(self, subject: str, body: str, to: str):
