@@ -12,8 +12,8 @@ def configura_ambiente():
     Configura variáveis de ambiente e inicializa serviços necessários.
     """    
     
-    global whatsapp
-    whatsapp = WhatsAppBot()
+    #global whatsapp
+    #whatsapp = WhatsAppBot()
     
     global gmail
     gmail = GmailApi()
@@ -91,7 +91,7 @@ def envia_whatsapp(numero, mensagem):
     """
     Envia uma mensagem via WhatsApp para o número especificado.
     """
-    whatsapp.send_message(numero, mensagem)
+    #whatsapp.send_message(numero, mensagem)
 
 def process_emails(emails_str):
     """
