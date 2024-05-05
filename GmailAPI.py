@@ -35,9 +35,14 @@ class GmailApi:
         self.gmail_credentials_path = creds
         self.service = build('gmail', 'v1', credentials=creds)
         '''
-        
-        token_json = base64.b64decode(os.getenv('GOOGLE_TOKEN_BASE64')).decode('utf-8')
-        token_data = json.loads(token_json)
+        try:
+            encoded_token = os.getenv('GOOGLE_TOKEN_BASE64')
+            if encoded_token is None:
+                raise ValueError("GOOGLE_TOKEN_BASE64 environment variable is not set.")
+            token_json = base64.b64decode().decode('utf-8')
+            token_data = json.loads(token_json)
+        except Exception as e:
+            print("Failed to decode the token:", str(e))
         creds = Credentials.from_authorized_user_info(token_data)
         self.gmail_credentials_path = creds
         self.service = build('gmail', 'v1', credentials=creds)
