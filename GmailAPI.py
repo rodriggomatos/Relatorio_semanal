@@ -39,7 +39,7 @@ class GmailApi:
             encoded_token = os.getenv('GOOGLE_TOKEN_BASE64')
             if encoded_token is None:
                 raise ValueError("GOOGLE_TOKEN_BASE64 environment variable is not set.")
-            token_json = base64.b64decode().decode('utf-8')
+            token_json = base64.b64decode(encoded_token).decode('utf-8')
             token_data = json.loads(token_json)
             creds = Credentials.from_authorized_user_info(token_data)
             self.gmail_credentials_path = creds
