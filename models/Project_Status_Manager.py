@@ -1,12 +1,12 @@
 
 
-class ProjectStatusManager:
+class TaskColumnsExtractor:
     def __init__(self, columns, tasks):
         self.columns = columns
         self.tasks = tasks
         self.project_status = {}
 
-    def get_project_status(self, task):
+    def get_columns(self, task):
         project_status = {}
         fields_map = {field['name']: field for field in task.get('custom_fields', [])}
         for column_name in self.columns:
@@ -17,9 +17,10 @@ class ProjectStatusManager:
                     value = custom_field['enum_value']['name']
                 elif custom_field.get('resource_subtype') == 'text':
                     value = custom_field.get('text_value', None)
-                elif custom_field.get('type') == 'date':
+                elif custom_field.get('type') == 'date' :
                     date_value = custom_field.get('date_value')
-                    value = date_value.get('date', None)
+                    if(date_value is not None):
+                        value = date_value.get('date', None)
                 if(value is not None):
                     project_status[column_name] = value
                     
