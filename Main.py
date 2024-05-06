@@ -160,6 +160,7 @@ if __name__ == '__main__':
                 list_emails = process_emails(emails.get('text_value'))
                 html_content = prepare_status_message_html_2(task_name, updated_project_status)
                 assunto = f"Status do Projeto - {task_name}"
+                list_emails = {'rodrigo@thorusengenharia.com.br', 'amanda@thorusengenharia.com.br'}
                 for email in list_emails:
                     try:
                         gmail.send_email_html(assunto, html_content, 'rodrigo@thorusengenharia.com.br')
