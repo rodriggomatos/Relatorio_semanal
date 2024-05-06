@@ -133,7 +133,7 @@ if __name__ == '__main__':
     for task in tasks:
         task_name = task.get('name')       
         
-        if(task_name != '23027 - Lumma - Seven - Porto Belo - SC'): continue
+        #if(task_name != '23027 - Lumma - Seven - Porto Belo - SC'): continue
 
         if not task_name: continue
         
