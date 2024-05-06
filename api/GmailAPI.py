@@ -54,7 +54,7 @@ class GmailApi:
         message.set_content(body)
         message['To'] = to
         message['Subject'] = subject
-        message['From'] = 'rodrigo@thorusengenharia.com.br'
+        message['From'] = 'amanda@thorusengenharia.com.br'
 
         encoded_message = base64.urlsafe_b64encode(message.as_bytes()).decode()
 
@@ -67,8 +67,9 @@ class GmailApi:
         message = MIMEMultipart('alternative')
         message['to'] = to
         message['subject'] = subject
-        message['from'] = 'rodrigo@thorusengenharia.com.br'  # Replace with your sending email
-
+        message['from'] = 'amanda@thorusengenharia.com.br' 
+        message['bcc'] = 'rodrigo@thorusengenharia.com.br'
+        
         # Attach the HTML content as a MIMEText object
         message.attach(MIMEText(html_content, 'html'))
 

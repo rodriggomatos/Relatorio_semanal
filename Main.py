@@ -44,8 +44,9 @@ for task in tasks:
     
     if(not contacts): continue   
     
-    contacts = {'rodrigo@thorusengenharia.com.br', 'amanda@thorusengenharia.com.br'}
-    
+    #contacts = {'rodrigo@thorusengenharia.com.br'#',amanda@thorusengenharia.com.br'}
+   
     strategy.send(task_name, columns_data, contacts)
+    
                         
     
