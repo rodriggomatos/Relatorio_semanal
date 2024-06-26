@@ -13,7 +13,7 @@ class EnviarPorEmail(MetodoDeEnvio):
         
         if emails_str is None:return []
 
-        # Remove espaços em branco da string
+        # Remove espaços em branco da string emails
         emails_str = emails_str.replace(" ", "")
         
         # Divide a string em uma lista usando '/' como separador
@@ -34,6 +34,18 @@ class EnviarPorEmail(MetodoDeEnvio):
                 print(f"Email enviado para {contact}")
             except Exception as e:
                 print(e)
+                
+    def send_one(self, subject: str, html_content: str, to: str, cc: list = None, bcc: list = None) -> bool:
+        try:
+            html_content = prepare_status_message_html_2(subject, html_content)
+            assunto = f"Status do Projeto - {subject}"
+            self.gmail.send_email_html(assunto, html_content, to, cc, bcc)
+            print(f"Email enviado para {to}")
+            return True
+        except Exception as e:
+            print(e)
+            return False
+
             
     def send_notifications(self, task_name, columns_data, contacts):
         for contact in contacts:

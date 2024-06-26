@@ -1,18 +1,8 @@
 
 import requests
-from twilio.rest import Client
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
-from googleapiclient.discovery import build
-import base64
-from email.message import EmailMessage
 import os
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-
+from typing import Dict
+from datetime import datetime
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -27,7 +17,7 @@ class AsanaAPI:
         self.base_url = base_url
         self.headers = {'Authorization': f'Bearer {self.access_token}'}
     
-    def get_project_tasks(self, opt_fields='name,custom_fields,assignee.name'):
+    def get_project_tasks(self, opt_fields='name,custom_fields,assignee.name,assignee.email'):
         endpoint = f'projects/{AsanaAPI.PROJECT_ID}/tasks'
         params = {'opt_fields': opt_fields}
         return self._make_paginated_request(endpoint, params=params)
@@ -47,3 +37,47 @@ class AsanaAPI:
                 print(f'Erro ao acessar {endpoint}. Código de status: {response.status_code}')
                 break
         return all_data
+    
+    def get_responsible_email(self, task: Dict) -> str:
+        """
+        Obtém o responsável pela tarefa a partir dos campos personalizados.
+        """
+        assignee = task.get('assignee')
+        if assignee:
+            return assignee.get('email', None)
+        return None
+
+    def update_task(self, task_id: str, update_data: Dict) -> None:
+            """
+            Atualiza uma tarefa no Asana.
+            """
+            url = f'{self.base_url}tasks/{task_id}'
+            response = requests.put(url, headers=self.headers, json=update_data)
+            if response.status_code != 200:
+                print(f'Erro ao atualizar tarefa {task_id}. Código de status: {response.status_code}, Resposta: {response.json()}')
+            
+    def mark_email_sent(self, task_id: str, custom_fields: Dict, status: str) -> None:
+        """
+        Marca no Asana que o email foi enviado ou ocorreu um erro.
+        """
+        log_envio_gid = None
+        for field in custom_fields.values():
+            if field['name'] == 'Log Envio':
+                log_envio_gid = field['gid']
+                break
+        
+        if log_envio_gid is None:
+            print("Campo personalizado 'Log Envio' não encontrado na tarefa.")
+            return
+        
+        update_data = {
+            "data": {
+                "custom_fields": {
+                    log_envio_gid: status
+                }
+            }
+        }
+        self.update_task(task_id, update_data)
+   
+        
+   

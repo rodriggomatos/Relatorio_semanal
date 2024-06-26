@@ -62,13 +62,22 @@ class GmailApi:
         send_message = self.service.users().messages().send(userId="me", body=create_message).execute()
         print(f'Message Id: {send_message["id"]}')
         
-    def send_email_html(self, subject, html_content, to):
+    def send_email_html(self, subject: str, html_content: str, to: str, cc: list = None, bcc: list = None)-> bool:
         # Create a MIME multipart message
         message = MIMEMultipart('alternative')
         message['to'] = to
         message['subject'] = subject
         message['from'] = 'amanda@thorusengenharia.com.br' 
-        message['bcc'] = 'rodrigo@thorusengenharia.com.br'
+        #message['bcc'] = 'rodrigo@thorusengenharia.com.br'
+        
+        #cópia conhecida: carbon copy
+        if cc:
+            message['cc'] = ', '.join(cc)
+            
+        #cópia oculta: blind carbon copy
+        if bcc:
+            bbcs = ', '.join(bcc)
+            message['bcc'] = bbcs
         
         # Attach the HTML content as a MIMEText object
         message.attach(MIMEText(html_content, 'html'))
@@ -81,6 +90,12 @@ class GmailApi:
 
         # Send the message via Gmail API
         send_message = self.service.users().messages().send(userId="me", body=message_body).execute()
-        print(f'Message Id: {send_message["id"]}')
+        id = send_message["id"]
+        if(id):
+            print(f'Message Id: {send_message["id"]}')
+            return True
+        else:
+            return False
+        
 
     
