@@ -67,7 +67,8 @@ class GmailApi:
         message = MIMEMultipart('alternative')
         message['to'] = to
         message['subject'] = subject
-        message['from'] = 'amanda@thorusengenharia.com.br' 
+        message['from'] = 'amanda@thorusengenharia.com.br'
+        message['reply-to'] = 'rodrigo@thorusengenharia.com.br'
         #message['bcc'] = 'rodrigo@thorusengenharia.com.br'
         
         #cópia conhecida: carbon copy

@@ -38,7 +38,7 @@ for task in tasks:
             
         task_name = task['name'] 
         
-        #if(not task_name=="Teste-Automação-Rodrigo"): continue
+        if(not task_name=="Teste-Automação-Rodrigo"): continue
         
         columns_data = task_columns_extractor.get_columns(task)    
         
