@@ -55,12 +55,20 @@ for task in tasks:
         
         #strategy.send(task_name, columns_data, contacts)
         
+        result = strategy.send_one(task_name, columns_data, contacts, None, bbc)
+        if result:
+            asana.mark_email_sent(task['gid'], custom_fields, datetime.now().strftime('%d/%m/%Y %H:%M:%S'))
+        else:
+            asana.mark_email_sent(task['gid'], custom_fields, "Email não enviado")
+            
+        '''
         for contact in contacts:            
             result = strategy.send_one(task_name, columns_data, contact, None, bbc)
             if result:
                 asana.mark_email_sent(task['gid'], custom_fields, datetime.now().strftime('%d/%m/%Y %H:%M:%S'))
             else:
                 asana.mark_email_sent(task['gid'], custom_fields, "Email não enviado")
+        '''
     except Exception as e:       
         asana.mark_email_sent(task['gid'], custom_fields, f"Erro: {str(e)}")
     

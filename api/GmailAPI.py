@@ -62,24 +62,24 @@ class GmailApi:
         send_message = self.service.users().messages().send(userId="me", body=create_message).execute()
         print(f'Message Id: {send_message["id"]}')
         
-    def send_email_html(self, subject: str, html_content: str, to: str, cc: list = None, bcc: list = None)-> bool:
-        # Create a MIME multipart message
+    def send_email_html(self, subject: str, html_content: str, to: list, cc: list = None, bcc: list = None) -> bool:
+     
         message = MIMEMultipart('alternative')
-        message['to'] = to
+        
+        
+        message['to'] = ', '.join(to)  # Concatena os destinatários em uma string separada por vírgula
         message['subject'] = subject
         message['from'] = 'amanda@thorusengenharia.com.br'
-        message['reply-to'] = 'rodrigo@thorusengenharia.com.br'
-        #message['bcc'] = 'rodrigo@thorusengenharia.com.br'
-        
-        #cópia conhecida: carbon copy
+        message['reply-to'] = 'amanda@thorusengenharia.com.br'
+
+        # Cópia conhecida (CC)
         if cc:
             message['cc'] = ', '.join(cc)
-            
-        #cópia oculta: blind carbon copy
+
+        # Cópia oculta (BCC)
         if bcc:
-            bbcs = ', '.join(bcc)
-            message['bcc'] = bbcs
-        
+            message['bcc'] = ', '.join(bcc)
+
         # Attach the HTML content as a MIMEText object
         message.attach(MIMEText(html_content, 'html'))
 
@@ -91,12 +91,11 @@ class GmailApi:
 
         # Send the message via Gmail API
         send_message = self.service.users().messages().send(userId="me", body=message_body).execute()
-        id = send_message["id"]
-        if(id):
+        
+        if "id" in send_message:
             print(f'Message Id: {send_message["id"]}')
             return True
-        else:
-            return False
-        
+        return False
+
 
     

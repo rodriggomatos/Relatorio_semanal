@@ -1,7 +1,7 @@
 
 def columns_names():
     return [    
-        "Direcionamentos",    
+        "Resumo",    
         "Status PPCI",
         "PPCI - Data Aprovação",
         "Status Hidro Cia de Águas",
