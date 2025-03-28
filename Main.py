@@ -50,8 +50,8 @@ for task in tasks:
         
         bbc = ['rodrigo@thorusengenharia.com.br']
         responsable = asana.get_responsible_email(task)
-        if(responsable):
-            bbc.append(responsable)
+        #if(responsable):
+            #bbc.append(responsable)
         
         #strategy.send(task_name, columns_data, contacts)
         
